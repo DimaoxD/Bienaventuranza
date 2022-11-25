@@ -62,9 +62,10 @@
 			$obj= new conectar();
 			$conexion=$obj->conexion();
 			$fecha=date("Y-m-d");
+			$validacioncama=mysqli_query($conexion,"SELECT idCama FROM cama WHERE N_Cama = '$datos[2]'");
 			$resultados=mysqli_query($conexion, "SELECT * FROM pacientes WHERE Cedula='$datos[0]'");
 			if(mysqli_num_rows($resultados)>0){
-			$vacio=mysqli_query($conexion,"SELECT `N_Cama` FROM `cama` WHERE `Pacientes_Cedula` = '$datos[0]'");
+			$vacio=mysqli_query($conexion,"SELECT idCama,`N_Cama` FROM `cama` WHERE `Pacientes_Cedula` = '$datos[0]'");
 			if(mysqli_num_rows($vacio)>0){
 				$response['message']= "Lo sentimos, este paciente ya tiene cama asignada";
 				echo json_encode($response);
@@ -72,13 +73,18 @@
 			}else{
 				$sql=mysqli_query($conexion,"UPDATE cama set Fecha='$fecha', Pacientes_Cedula='$datos[0]',
 				Estado='$datos[1]'
-				where N_Cama='$datos[2]'");			
+				where N_Cama='$datos[2]'");	
+				if(isset($sql)){	
+				while($row=mysqli_fetch_row($validacioncama)){
+				$idCama = $row[0];
+				$insert=mysqli_query($conexion,"UPDATE dietas SET Pacientes_Cedula='$datos[0]' WHERE idDietas = '$idCama'");
+				$insert2=mysqli_query($conexion,"INSERT INTO `log_dietas`(`Cama_idCama`, `Pacientes_Cedula`, `Dietas_IdDietas`,`Estado`) VALUES ('$idCama','$datos[0]','$idCama','1')");
 				$response['message'] = "success"; 
 				$response['status'] = true; 
 				echo json_encode($response);
 				exit(); 
-			}
-		} else {
+			}}}
+				} else {
 				$response['message']= "Lo sentimos, este paciente no existe";
 				echo json_encode($response);
 				exit();
@@ -105,10 +111,12 @@
 			$obj= new conectar();
 			$conexion=$obj->conexion();
 			$fecha=date("Y-m-d");
-			$sql="UPDATE cama SET Fecha='$fecha',Estado='1',Pacientes_Cedula=1 
-	WHERE  idCama='$id_Cama'";
-			return mysqli_query($conexion,$sql);
-		}
+			$sql=mysqli_query($conexion,"UPDATE cama SET Fecha='$fecha',Estado='1',Pacientes_Cedula=1 
+	WHERE  idCama='$id_Cama'");
+	if(isset($sql)){
+		$insert="UPDATE dietas SET Pacientes_Cedula='1' WHERE idDietas = '$id_Cama'";
+		return mysqli_query($conexion,$insert);
+		}}
 
 		public function inhabilitar($id_Cama){
 			$obj= new conectar();

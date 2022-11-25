@@ -35,6 +35,7 @@ if(!empty($_POST['Nombres'])) {
 		
 	if(mysqli_num_rows($sql)==0){
 		$insert=mysqli_query($conexion,"INSERT INTO pacientes(Cedula,Nombres) VALUES ('$cedula','$nombres')");
+		
 		$response['message'] = "success"; 
 		$response['status'] = true; 
 		echo json_encode($response);
