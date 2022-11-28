@@ -87,6 +87,28 @@
 				exit();
 			}
 		}
+		public function observaciones($datos){
+			header("Content-Type: application/json");
+			$response = array('status'=>false, 'message'=>null);
+			$obj= new conectar();
+			$conexion=$obj->conexion();
+			$Dig=mysqli_query($conexion,"SELECT idCama FROM cama WHERE N_Cama = '$datos[0]'");
+			while($row=mysqli_fetch_row($Dig)){
+				$idDig=$row[0];
+			$resultados=mysqli_query($conexion, "SELECT * FROM pacientes WHERE Cedula='$datos[1]'");
+			if(mysqli_num_rows($resultados)>0){
+				$sql=mysqli_query($conexion,"INSERT INTO sugerencias (`Fecha`,`Observaciones`,`Tipo_dieta`,`Cama_idCama`)values ('$datos[3]','$datos[4]','$datos[2]','$idDig')"); 	
+				$response['message'] = "success"; 
+				$response['status'] = true; 
+				echo json_encode($response);
+				exit(); 
+			} else {
+				$response['message']= "Lo sentimos, este paciente no existe";
+				echo json_encode($response);
+				exit();
+		}
+		}
+	}
 
 		public function estado($datos){
 			header("Content-Type: application/json");

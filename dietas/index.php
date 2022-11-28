@@ -3,6 +3,46 @@
 <head>
 	<title>Bienaventuranza IPS</title>
 	<?php require_once "scripts.php";  ?>
+	<style>
+        body{font-family: Arial, Helvetica, sans-serif;}
+		input[readonly]
+		{
+			background-color:#e9ecef;
+		}
+		select[readonly]
+		{
+			background-color:#ccc;
+		}	
+		.lista {
+			list-style-type: none;
+			width: 300px;
+			height: auto;
+			position: absolute;
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+
+		.lista1 {
+			padding: 10px;
+            cursor: pointer;
+            background-color: #009fa5; 
+            border-bottom: 1px solid #d4d4d4; 
+		}
+		.lista2 {
+			list-style-type: none;
+			width: 300px;
+			height: auto;
+			position: absolute;
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+		.lista3 {
+			padding: 10px;
+            cursor: pointer;
+            background-color: #009fa5; 
+            border-bottom: 1px solid #d4d4d4; 
+		}
+		</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
@@ -45,11 +85,11 @@
 					<div class="card-header ">
 Reservas de cama					</div>
 					<div class="card-body">
-						<span class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#agregarnuevosdatosmodal">
-							Agregar paciente <span class="fa fa-plus-circle"></span>
+						<span class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#agregarsugerencia">
+							Agregar sugerencia <span class="fa fa-plus-circle"></span>
 						</span>
-						<span class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modificardatosmodal">
-							Modificar paciente <span class="fa fa-plus-circle"></span>
+						<span class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#versugerencia">
+							Ver sugerencias <span class="fa fa-plus-circle"></span>
 						</span>
 						<hr>
 						<div id="tablaDatatable"></div>
@@ -112,23 +152,48 @@ Reservas de cama					</div>
 		</div>
 	</div>
 
-	<div class="modal" id="modificardatosmodal" tabindex="-1" role="dialog">
+	<div class="modal" id="agregarsugerencia" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Editar paciente</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Agregar sugerencia</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 						</button>
 				</div>
 				<div class="modal-body">
 					<form id="frmedit">
-					<label>Cedula Actual:</label>
-					<input type="text" class="form-control input-sm" id="CedulaA" name="CedulaA" required>
-					<label>Nuevo numero de cedula:</label>
-					<input type="text" class="form-control input-sm" id="CedulaAA" name="CedulaAA" required>	
+					<label>Cama:</label>
+					<input type="text" class="form-control input-sm" id="CamaS" name="CamaS" required autocomplete="off">
+					<ul class="lista" id="lista"></ul>
+					<label>Cedula:</label>
+					<input type="text" class="form-control input-sm" id="CedulaS" name="CedulaS" readonly>	
 					<label>Nombres:</label>
-					<input type="text" class="form-control input-sm" id="NombresAA" name="NombresAA" required >
-						
+					<input type="text" class="form-control input-sm" id="NombresS" name="NombresS" disabled >
+					<hr>
+					<label>Dieta:</label>
+					<label>Tipo de dieta:</label>
+						<select class="form-select"  id="TDietaS" name="TDietaS" required>
+						<option>Seleccione una opcion</option>
+						<option value="1">Normal</option>
+						<option value="2">Blanda</option>
+						<option value="3">Semiblanda</option>
+						<option value="4">Todo pure</option>
+						<option value="5">Liquida total</option>
+						<option value="6">Liquida clara</option>
+						<option value="7">Hipercalorica hiperproteica</option>
+						<option value="8">Hipograsa</option>
+						<option value="9">Renal</option>
+						<option value="10">Renal Dialisis</option>
+						<option value="11">Hipoglucida</option>
+						<option value="12">Hiposodica</option>
+						<option value="13">Nada via oral</option>
+						<option value="14">Sin dieta</option>
+						</select>
+					<hr>
+					<label>Fecha de solicitud</label>
+					<input type="date" class="form-control input-sm" id="FechaS" name="FechaS" required>
+					<label>Observaciones</label>
+					<input type="text" class="form-control input-sm" id="Observaciones" name="Observaciones">
 				<br><br>
 				<button type="submit" name="submit" id="btnAgregarnuevo" class="btn btn-primary submitBtn">Agregar</button>
 					</form>
@@ -140,7 +205,25 @@ Reservas de cama					</div>
 			</div>
 		</div>
 	</div>
-
+<!--Modal-->
+<div class="modal" id="versugerencia" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-fullscreen">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Agregar sugerencia</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						</button>
+				</div>
+				<div class="modal-body">
+				<div id="tablaDatatable2"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Modal -->
 	<div class="modal" id="modalEditar" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
@@ -214,6 +297,7 @@ Reservas de cama					</div>
 		</div>
 	</div>
 	
+	<script src="js/peticiones.js"></script>
 
 </body>
 </html>
@@ -261,7 +345,7 @@ Reservas de cama					</div>
 	$('#content').html('<div class="loading"><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</div>');
         $.ajax({
             type: 'POST',
-            url: 'procesos/editPacientes.php',
+            url: 'procesos/observaciones.php',
             data: new FormData(this),
             contentType: false,
             cache: false,
@@ -334,6 +418,12 @@ Reservas de cama					</div>
 		$('#tablaDatatable').load('tabla.php');
 	});
 </script>
+<script type="text/javascript"> //CARGAR TABLA
+	$(document).ready(function(){
+		$('#tablaDatatable2').load('tabla2.php');
+	});
+</script>
+
 
 <script type="text/javascript">   //OBTENER DATOS Y ELIMINARLOS
 	function agregaFrmActualizar(id_Cama){
@@ -424,7 +514,7 @@ Reservas de cama					</div>
 
 <script> //LLAMAR CEDULA Y NOMBRE
     
-	document.getElementById("CedulaA").onchange = function(){alerta()};
+	document.getElementById("CamaS").onchange = function(){alerta()};
     function alerta() {
         // Creando el objeto para hacer el request
         var request = new XMLHttpRequest();
@@ -437,8 +527,9 @@ Reservas de cama					</div>
             // Revision si fue completada la peticion y si fue exitosa
             if(this.readyState === 4 && this.status === 200) {
                 // Ingresando la respuesta obtenida del PHP
-                document.getElementById("CedulaAA").value = this.response.CedulaAA;
-				document.getElementById("NombresAA").value = this.response.NombresAA;
+                document.getElementById("CedulaS").value = this.response.CedulasS;
+				document.getElementById("NombresS").value = this.response.NombresS;
+				document.getElementById("TDietaS").value = this.response.TDietaS;
 				
             }
         };

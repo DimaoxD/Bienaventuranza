@@ -1,6 +1,6 @@
 <?php
         if($_SERVER["REQUEST_METHOD"] == "POST") {
-                $RUT = $_POST["CedulaA"];
+                $RUT = $_POST["CamaS"];
                 
              
                 // Codigo para buscar en tu base de datos acá
@@ -8,34 +8,41 @@
                 'root',
                 '',
                 'prueba_bips');
-
-                $sqlsi = "SELECT Cedula,Nombres FROM pacientes WHERE Cedula = '$RUT'";
+                $Dig=mysqli_query($conexion,"SELECT idCama FROM cama WHERE N_Cama = '$RUT'");
+                while($row=mysqli_fetch_row($Dig)){
+                    $idDig=$row[0];
+                $sqlsi = "SELECT cama.Pacientes_Cedula,pacientes.Nombres FROM cama JOIN pacientes ON cama.Pacientes_Cedula = pacientes.Cedula WHERE N_Cama = '$RUT'";
+                $sqlsi2 = "SELECT Tipo_Dieta FROM dietas WHERE idDietas = $idDig";
+                $result2=mysqli_query($conexion,$sqlsi2);
+                $dato2=mysqli_fetch_row($result2);
                 $result=mysqli_query($conexion,$sqlsi);
                 if(mysqli_num_rows($result)>0){
                 $dato=mysqli_fetch_row($result);
                     
-                $CedulaAA = $dato[0];
-                $NombresA = $dato[1];
+                $CedulasS = $dato[0];
+                $NombresS = $dato[1];
+                $TDietaS = $dato2[0];
                 
                 
                echo json_encode([
-                'CedulaAA' => $CedulaAA,
-                'NombresAA' => $NombresA      
+                'CedulasS' => $CedulasS,
+                'NombresS' => $NombresS,
+                'TDietaS' => $TDietaS
                ]);
              
             } else {
                     
-                    $CedulaAA = "No existe";
-                    $NombresA = "Paciente";
+                    $CedulasS = "Cama";
+                    $NombresS = "Desocupada";
                     
 
                 echo json_encode([
-                    'CedulaAA' => $CedulaAA,
-                    'NombresAA' => $NombresA                    
+                    'CedulasS' => $CedulasS,
+                    'NombresS' => $NombresS                    
                 ]);
 
                 }
-
+            }
             }
 
  ?>

@@ -107,6 +107,7 @@ $result=mysqli_query($conexion,$sql);
 	</table>
 </div>
 
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#iddatatable').DataTable({
