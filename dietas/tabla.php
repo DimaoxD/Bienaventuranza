@@ -6,16 +6,15 @@ require_once "clases/conexion.php";
 $obj= new conectar();
 $conexion=$obj->conexion();
 
-$sql="SELECT idCama, cama.N_Cama, dietas.Fecha, Tipo_Dieta, Observaciones, cama.Pacientes_Cedula, pacientes.Nombres FROM cama 
+$sql="SELECT cama.idCama, cama.N_Cama, dietas.Fecha, Tipo_Dieta, Observaciones, cama.Pacientes_Cedula, pacientes.Nombres FROM cama 
 Join pacientes on cama.Pacientes_Cedula = pacientes.Cedula JOIN dietas on dietas.Cama_idCama = cama.idCama";
 $result=mysqli_query($conexion,$sql);
 ?>
 
 
 <div>
-<div class="table-responsive">
-	<table class="table table-hover table-condensed table-bordered nowrap" style="width:100%" id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+	<table class="table table-condensed table-bordered table-striped no-wrap" id="iddatatable">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 				<td>Fecha</td>
 			    <td>No. Cama</td>
@@ -26,7 +25,7 @@ $result=mysqli_query($conexion,$sql);
 				
 			</tr>
 		</thead>
-		<tfoot style="background-color: #ccc;color: white; font-weight: bold;">
+		<tfoot style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<td>Fecha</td>
 			    <td>No. Cama</td>
@@ -50,54 +49,28 @@ $result=mysqli_query($conexion,$sql);
 					echo $ver[5];
 				}?></td>
 				<td><?php echo $ver[6]?></td>
-				<td><?php if($ver[3]==1) echo "Normal,$ver[4]";
-				elseif($ver[3]==2) echo "Blanda,$ver[4]";
-				elseif($ver[3]==3) echo "Semiblanda,$ver[4]";
-				elseif($ver[3]==4) echo "Todo pure,$ver[4]";
-				elseif($ver[3]==5) echo "Liquida total,$ver[4]";
-				elseif($ver[3]==6) echo "Liquida clara,$ver[4]";
-				elseif($ver[3]==7) echo "Hipercalorica hiperproteica,$ver[4]";
-				elseif($ver[3]==8) echo "Hipograsa,$ver[4]";
-				elseif($ver[3]==9) echo "Renal,$ver[4]";
-				elseif($ver[3]==10) echo "Renal Dialisis,$ver[4]";
-				elseif($ver[3]==11) echo "Hipoglucida,$ver[4]";
-				elseif($ver[3]==12) echo "Hiposodica,$ver[4]";
-				elseif($ver[3]==13) echo "Nada via oral,$ver[4]";
-				elseif($ver[3]==14) echo "Sin dieta,$ver[4]"; ?></td>				
-					<!-- Esto es el dropdown -->
-					<td style="text-align: center;">
-					<div class="dropdown">
-					<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<span class="fa-regular fa-bars"> </span> Opciones
-			</button>
-					<ul class="dropdown-menu">
-					<li style="text-align: center;"><a class="dropdown-item" ><?php if ($ver[3]){ ?>
+				<td><?php if($ver[3]==1) echo "NORMAL,$ver[4]";
+				elseif($ver[3]==2) echo "BLANDA,$ver[4]";
+				elseif($ver[3]==3) echo "SEMIBLANDA,$ver[4]";
+				elseif($ver[3]==4) echo "TODO PURE,$ver[4]";
+				elseif($ver[3]==5) echo "LIQUIDA TOTAL,$ver[4]";
+				elseif($ver[3]==6) echo "LIQUIDA CLARA,$ver[4]";
+				elseif($ver[3]==7) echo "HIPERCALORICA HIPERPROTEICA,$ver[4]";
+				elseif($ver[3]==8) echo "HIPOGRASA,$ver[4]";
+				elseif($ver[3]==9) echo "RENAL,$ver[4]";
+				elseif($ver[3]==10) echo "RENAL DIALISIS,$ver[4]";
+				elseif($ver[3]==11) echo "HIPLOGUCIDA,$ver[4]";
+				elseif($ver[3]==12) echo "HIPOSODICA,$ver[4]";
+				elseif($ver[3]==13) echo "NADA VIA ORAL,$ver[4]";
+				elseif($ver[3]==14) echo "SIN DIETA,$ver[4]"; ?></td>				
+					<td>
+					<?php 					
+					if(($ver[5]==1) OR ($ver[5]==2)){?>
+					<span class="btn btn-info btn-sm"><span class="fa-regular fa-hand"></span> Cama Desocupada </span>					
+					<?php }else{ ?>
 						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarnuevosdatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
-							<span class="fa-solid fa-pen-to-square"></span> Asignar Cama </span>
-					
-					
-														<?php	}elseif($ver[2]=='3' OR $ver[2]=='4' OR $ver[2]='5'){ ?>
-						<span class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEstado" onclick="estadoFrmActualizar('<?php echo $ver[0] ?>')">
-						<span class="fa-solid fa-location-pin-lock"></span> Cambiar estado
-						</span> 
-					<?php }elseif($ver[2]=='2'){ ?>
-						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
-							<span class="fa-solid fa-pen-to-square"></span> Asignar Cama </span><?php } else {?>					
-							<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
-							<span class="fa-solid fa-pen-to-square"></span> Asignar Cama </span><?php } ?>					
-					</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li style="text-align: center;"><span class="btn btn-danger btn-sm" onclick="eliminarDatos('<?php echo $ver[0] ?>')">
-							<span class="fa fa-trash"></span> Desocupar cama
-						</span></li>
-					<li><hr class="dropdown-divider"></li>
-					<li style="text-align: center;"><span class="btn btn-success btn-sm" onclick="inhabilitarDatos('<?php echo $ver[0] ?>')">
-							<span class="fa fa-hourglass"></span> Inhabilitar cama
-						</span></li>
-					</ul>
-					</div>
-
-					
+						<span class="fa-solid fa-pen-to-square"></span> Asignar Dieta </span>
+					<?php }?>
 					</td>
 				</tr>
 				<?php 
@@ -134,7 +107,10 @@ $result=mysqli_query($conexion,$sql);
 				extend:    'excelHtml5',
 				text:      '<i class="fas fa-file-excel"></i> ',
 				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
+				className: 'btn btn-success',
+				exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4 ]
+                },
 			},
 			{
 				extend:    'pdfHtml5',

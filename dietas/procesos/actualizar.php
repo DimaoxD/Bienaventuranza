@@ -5,9 +5,11 @@
 
 	$datos=array(
 		
-		$_POST['CedulaU'], //0
-		$_POST['Estado'], //1
-		$_POST['NCama'] //2
+		$_POST['Cedula'], //0
+		$_POST['NCama'], //1
+		$_POST['TDieta'], //2
+		$_POST['Observaciones'],
+		$_POST['id_Cama']
 				);
 
 	echo $obj->actualizar($datos);

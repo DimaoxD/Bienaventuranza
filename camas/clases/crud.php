@@ -78,7 +78,7 @@
 				while($row=mysqli_fetch_row($validacioncama)){
 				$idCama = $row[0];
 				$insert=mysqli_query($conexion,"UPDATE dietas SET Pacientes_Cedula='$datos[0]' WHERE idDietas = '$idCama'");
-				$insert2=mysqli_query($conexion,"INSERT INTO `log_dietas`(`Cama_idCama`, `Pacientes_Cedula`, `Dietas_IdDietas`,`Estado`) VALUES ('$idCama','$datos[0]','$idCama','1')");
+				$insert2=mysqli_query($conexion,"INSERT INTO `log_dietas`(`Cama_idCama`, `Pacientes_Cedula`, `Dietas_IdDietas`,`Estado`,`EstadoNotificaciones`) VALUES ('$idCama','$datos[0]','$idCama','0','1')");
 				$response['message'] = "success"; 
 				$response['status'] = true; 
 				echo json_encode($response);
@@ -111,12 +111,15 @@
 			$obj= new conectar();
 			$conexion=$obj->conexion();
 			$fecha=date("Y-m-d");
-			$sql=mysqli_query($conexion,"UPDATE cama SET Fecha='$fecha',Estado='1',Pacientes_Cedula=1 
-	WHERE  idCama='$id_Cama'");
-	if(isset($sql)){
-		$insert="UPDATE dietas SET Pacientes_Cedula='1' WHERE idDietas = '$id_Cama'";
+			$validacioncama=mysqli_query($conexion,"SELECT Pacientes_Cedula FROM cama WHERE idCama = '$id_Cama'");
+			while($row=mysqli_fetch_row($validacioncama)){
+			$insert2=mysqli_query($conexion,"INSERT INTO `log_dietas`(`Cama_idCama`, `Pacientes_Cedula`, `Dietas_IdDietas`,`Estado`,`EstadoNotificaciones`) VALUES ('$id_Cama','$row[0]','$id_Cama','0','2')");
+			if(isset($insert2)){
+				$sql=mysqli_query($conexion,"UPDATE cama SET Fecha='$fecha',Estado='1',Pacientes_Cedula=1 
+	WHERE  idCama='$id_Cama'");	
+		$insert="UPDATE dietas SET Pacientes_Cedula='1', Tipo_Dieta = NULL, Observaciones = NULL WHERE idDietas = '$id_Cama'";	
 		return mysqli_query($conexion,$insert);
-		}}
+		}}}
 
 		public function inhabilitar($id_Cama){
 			$obj= new conectar();

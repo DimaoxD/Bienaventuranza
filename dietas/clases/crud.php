@@ -27,28 +27,21 @@
 			$obj= new conectar();
 			$conexion=$obj->conexion();
 			$fecha=date("Y-m-d");
-			$resultados=mysqli_query($conexion, "SELECT * FROM pacientes WHERE Cedula='$datos[0]'");
-			if(mysqli_num_rows($resultados)>0){
-			$vacio=mysqli_query($conexion,"SELECT `N_Cama` FROM `cama` WHERE `Pacientes_Cedula` = '$datos[0]'");
-			if(mysqli_num_rows($vacio)>0){
-				$response['message']= "Lo sentimos, este paciente ya tiene cama asignada";
-				echo json_encode($response);
-				exit();
-			}else{
-				$sql=mysqli_query($conexion,"UPDATE cama set Fecha='$fecha', Pacientes_Cedula='$datos[0]',
-				Estado='$datos[1]'
-				where N_Cama='$datos[2]'");			
+			$sql=mysqli_query($conexion,"UPDATE dietas set Tipo_Dieta='$datos[2]', Observaciones='$datos[3]'
+				where idDietas='$datos[4]'");		
+			if(isset($sql))	{
 				$response['message'] = "success"; 
 				$response['status'] = true; 
 				echo json_encode($response);
 				exit(); 
 			}
-		} else {
+		 else {
 				$response['message']= "Lo sentimos, este paciente no existe";
 				echo json_encode($response);
 				exit();
 			}
 		}
+		
 		public function observaciones($datos){
 			header("Content-Type: application/json");
 			$response = array('status'=>false, 'message'=>null);

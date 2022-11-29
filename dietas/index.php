@@ -3,8 +3,26 @@
 <head>
 	<title>Bienaventuranza IPS</title>
 	<?php require_once "scripts.php";  ?>
+	<link href="css/estilos.css" rel="stylesheet">
 	<style>
-        body{font-family: Arial, Helvetica, sans-serif;}
+       body {
+  background: linear-gradient(-45deg, #e3f2fd, #e6f3fd, #eef7fe, #ccdae4);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 		input[readonly]
 		{
 			background-color:#e9ecef;
@@ -67,13 +85,32 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/referencias">Referencias</a></li>
             <li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/solicitud">Solicitudes - Interconsultas</a></li>    
+			<li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/contrareferencia">Contrareferencia</a></li> 
+			<li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/solicitud">Imagenologia</a></li> 
+			<li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/phd">PHD</a></li> 
+			<li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/dietas">Dietas</a></li> 
+			<li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/oxigeno">Oxigeno</a></li> 
           </ul>
+	</li>
+	<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+            Certificados
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="http://localhost/datatable%20-%20copia/defuncion">Defuncion</a></li>
+          </ul>
+	</li>
+		
 		  <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="http://localhost/datatable%20-%20copia/dashboard/">
 			Dashboard
 		  </a>
         </li>
       </ul>
+	  <?php
+            include("php/conexion.php");
+        ?>    
+	 
     </div>
   </div>
 </nav>
@@ -81,9 +118,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="card text-left border-primary mb-3 " >
+				<div class="card text-left  mb-3 " >
 					<div class="card-header ">
-Reservas de cama					</div>
+					Solicitud de dietas</div>
 					<div class="card-body">
 						<span class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#agregarsugerencia">
 							Agregar sugerencia <span class="fa fa-plus-circle"></span>
@@ -91,6 +128,9 @@ Reservas de cama					</div>
 						<span class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#versugerencia">
 							Ver sugerencias <span class="fa fa-plus-circle"></span>
 						</span>
+               			<button id="notification-icon" name="button" onclick="myFunction()" class="btn btn-dark dropbtn"><span id="notification-count"><?php if($count>0) { echo $count; } ?></span><img src="img/icono.png"/>Abrir notificaciones</button>
+               			<div id="notification-latest">
+						</div>
 						<hr>
 						<div id="tablaDatatable"></div>
 					</div>
@@ -105,7 +145,7 @@ Reservas de cama					</div>
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Agrega nuevo paciente</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Asignar dieta</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 						</button>
 				</div>
@@ -113,29 +153,29 @@ Reservas de cama					</div>
 					<form id="frmnuevo" autocomplete="off">
 					<input type="text" hidden="" id="id_Cama" name="id_Cama">
 						<label>Nombre:</label>
-						<input type="text" class="form-control input-sm" id="Nombres" name="Nombres" disabled >
+						<input type="text" class="form-control input-sm" id="Nombres" name="Nombres" readonly >
 						<label>Cedula:</label>
-						<input type="text" class="form-control input-sm" id="Cedula" name="Cedula" disabled>
+						<input type="text" class="form-control input-sm" id="Cedula" name="Cedula" readonly>
 						<label>Numero de cama:</label>
-						<input type="text" class="form-control input-sm" id="NCama" name="NCama" disabled>
+						<input type="text" class="form-control input-sm" id="NCama" name="NCama" readonly>
 						<hr>
 						<label>Tipo de dieta:</label>
 						<select class="form-select"  id="TDieta" name="TDieta" required>
 						<option>Seleccione una opcion</option>
-						<option value="1">Normal</option>
-						<option value="2">Blanda</option>
-						<option value="3">Semiblanda</option>
-						<option value="4">Todo pure</option>
-						<option value="5">Liquida total</option>
-						<option value="6">Liquida clara</option>
-						<option value="7">Hipercalorica hiperproteica</option>
-						<option value="8">Hipograsa</option>
-						<option value="9">Renal</option>
-						<option value="10">Renal Dialisis</option>
-						<option value="11">Hipoglucida</option>
-						<option value="12">Hiposodica</option>
-						<option value="13">Nada via oral</option>
-						<option value="14">Sin dieta</option>
+						<option value="1">NORMAL</option>
+						<option value="2">BLANDA</option>
+						<option value="3">SEMIBLANDA</option>
+						<option value="4">TODO PURE</option>
+						<option value="5">LIQUIDA TOTAL</option>
+						<option value="6">LIQUIDA CLARA</option>
+						<option value="7">HIPERCALORICA HIPERPROTEICA</option>
+						<option value="8">HIPOGRASA</option>
+						<option value="9">RENAL</option>
+						<option value="10">RENAL DIALISIS</option>
+						<option value="11">HIPLOGUCIDA</option>
+						<option value="12">HIPOSODICA</option>
+						<option value="13">NADA VIA ORAL</option>
+						<option value="14">SIN DIETA</option>
 						</select>
 						<hr>
 						<label>Observaciones</label>
@@ -210,7 +250,7 @@ Reservas de cama					</div>
 		<div class="modal-dialog modal-fullscreen">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Agregar sugerencia</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Ver sugerencia</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 						</button>
 				</div>
@@ -223,80 +263,7 @@ Reservas de cama					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Modal -->
-	<div class="modal" id="modalEditar" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Asignar Cama</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-						</button>
-				</div>
-				<div class="modal-body">
-					<form id="frmnuevoU">
-						<input type="text" hidden="" id="id_Cama" name="id_Cama">
-						<label>No. Cama</label>
-						<input type="text"  class="form-control input-sm" id="NCama" name="NCama">
-						
-						<div>
-						<label for="CedulaU">Cedula</label>
-						<input type="text" autocomplete="off" class="form-control input-sm" id="CedulaU" name="CedulaU" placeholder="Ingresa un numero de cedula">
-						<span id="search_result"></span>
-						</div>
-						<label>Nombres</label>
-						<input type="text"  class="form-control input-sm" disabled id="NombreU" name="NombreU">
-						
-						<label>Estado</label>
-						<select type="text" class="form-control input-sm" id="Estado" name="Estado">
-						
-						<option value="3">Ocupado</option>
-						<option value="4">Reservada</option>
-						<option value="5">Aislamiento</option>
-
-						</select>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-warning" id="btnActualizar">Actualizar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" id="modalEstado" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Editar</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-						</button>
-				</div>
-				<div class="modal-body">
-					<form id="frmestado">
-						<input type="text" hidden="" id="id_Cama1" name="id_Cama1">
-						<label>No. Cama</label>
-						<input type="text"  class="form-control input-sm" id="NCama1" name="NCama1">
-						
-						<label>Estado</label>
-						<select type="text" class="form-control input-sm" id="Estado1" name="Estado1">
-						
-						<option value="3">Ocupado</option>
-						<option value="4">Reservada</option>
-						<option value="5">Aislamiento</option>
-
-						</select>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-warning" id="btnEstado">Actualizar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+	</div>	
 	<script src="js/peticiones.js"></script>
 
 </body>
@@ -311,7 +278,7 @@ Reservas de cama					</div>
     e.preventDefault(); 
         $.ajax({
             type: 'POST',
-            url: 'procesos/agregar.php',
+            url: 'procesos/actualizar.php',
             data: new FormData(this),
             contentType: false,
             cache: false,
@@ -373,44 +340,7 @@ Reservas de cama					</div>
             
         }
         });
-    });
-
-		$('#btnActualizar').click(function(){
-			datos=$('#frmnuevoU').serialize();
-
-			$.ajax({
-				type:"POST",
-				data:datos,
-				url:"procesos/actualizar.php",
-				success:function(data){
-					if(data.status){
-						$('#tablaDatatable').load('tabla.php');
-						alertify.success("Se asigno la cama");							
-					}else{
-						alertify.error(data.message);
-					}
-				}
-			});
-		});
-		$('#btnEstado').click(function(){
-			datos=$('#frmestado').serialize();
-
-			$.ajax({
-				type:"POST",
-				data:datos,
-				url:"procesos/actualizar2.php",
-				success:function(data){
-					if(data.status){
-						$('#tablaDatatable').load('tabla.php');
-						alertify.success("Se edito con exito");							
-					}else{
-						alertify.error(data.message);
-					}
-				}
-			});
-		});
-
-	   
+    });   
 	});
 </script>
 <script type="text/javascript"> //CARGAR TABLA
@@ -433,7 +363,7 @@ Reservas de cama					</div>
 			url:"procesos/obtenDatos.php",
 			success:function(r){
 				datos=jQuery.parseJSON(r);
-				$('#idCama').val(datos['idCama']);
+				$('#id_Cama').val(datos['idCama']);
 				$('#Nombres').val(datos['Nombres']);
 				$('#NCama').val(datos['N_Cama']);
 				$('#TDieta').val(datos['Tipo_Dieta']);
@@ -445,69 +375,6 @@ Reservas de cama					</div>
 					$('#Cedula').val(datos['Cedula']);
 				}
 			}
-		});
-	}
-	
-	function estadoFrmActualizar(id_Cama1){
-		$.ajax({
-			type:"POST",
-			data:"id_Cama1=" + id_Cama1,
-			url:"procesos/obtenDatos1.php",
-			success:function(r){
-				datos=jQuery.parseJSON(r);
-				$('#idCama1').val(datos['idCama']);
-				$('#NCama1').val(datos['N_Cama']);
-				$('#Estado1').val(datos['Estado']);
-			}
-		});
-	}
-
-	function eliminarDatos(id_Cama){
-		alertify.confirm('¿Realmente desea desocupar la cama seleccionada?', function(
-		
-){ 
-
-			$.ajax({
-				type:"POST",
-				data:"id_Cama=" + id_Cama,
-				url:"procesos/eliminar.php",
-				success:function(r){
-					if(r==1){
-						$('#tablaDatatable').load('tabla.php');
-						alertify.success("Eliminado con exito !");
-					}else{
-						alertify.error("No se pudo eliminar...");
-					}
-				}
-			});
-
-		}
-		, function(){
-
-		});
-	}
-	function inhabilitarDatos(id_Cama){
-		alertify.confirm('¿Realmente desea deshabilitar la cama seleccionada?', function(
-		
-){ 
-
-			$.ajax({
-				type:"POST",
-				data:"id_Cama=" + id_Cama,
-				url:"procesos/inhabilitar.php",
-				success:function(r){
-					if(r==1){
-						$('#tablaDatatable').load('tabla.php');
-						alertify.success("Cama deshabilitada !");
-					}else{
-						alertify.error("No se pudo eliminar...");
-					}
-				}
-			});
-
-		}
-		, function(){
-
 		});
 	}
 </script>
@@ -542,32 +409,26 @@ Reservas de cama					</div>
         request.send(formData);
     }
 </script>
-
-<script> //LLAMAR CEDULA Y NOMBRE
-    
-	document.getElementById("CedulaU").onchange = function(){alerto()};
-    function alerto() {
-        // Creando el objeto para hacer el request
-        var request = new XMLHttpRequest();
-		request.responseType = 'json';
-        // Objeto PHP que consultaremos
-        request.open("POST", "services.php");
- 
-        // Definiendo el listener
-        request.onreadystatechange = function() {
-            // Revision si fue completada la peticion y si fue exitosa
-            if(this.readyState === 4 && this.status === 200) {
-                // Ingresando la respuesta obtenida del PHP
-                document.getElementById("NombreU").value = this.response.NombreU;
-				
-            }
-        };
- 
-        // Recogiendo la data del HTML
-        var myForm = document.getElementById("frmnuevoU");
-        var formData = new FormData(myForm);
- 
-        // Enviando la data al PHP
-        request.send(formData);
-    }
-</script>
+<script type="text/javascript">
+      function myFunction() {
+        $.ajax({
+          url: "php/notificaciones.php",
+          type: "POST",
+          processData:false,
+          success: function(data){
+            $("#notification-count").remove();     
+            $("#notification-latest").show();
+			$("#notification-latest").html(data);
+          },
+          error: function(){}           
+        });
+      }
+                                 
+      $(document).ready(function() {
+        $('body').click(function(e){
+          if ( e.target.id != 'notification-icon'){
+            $("#notification-latest").hide();
+          }
+        });
+      });                                     
+    </script>
