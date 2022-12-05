@@ -58,7 +58,7 @@ $result=mysqli_query($conexion,$sql);
 <div>
 <table>
 	<table class="table table-hover table-condensed table-bordered table-responsive"  id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<th>Nombre</th>
 			<th>Documento</th>

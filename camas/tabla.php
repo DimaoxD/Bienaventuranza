@@ -14,8 +14,8 @@ $result=mysqli_query($conexion,$sql);
 
 <div>
 <div class="table-responsive">
-	<table class="table table-hover table-condensed table-bordered nowrap" style="width:100%" id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+	<table class="table table-hover table-condensed  nowrap" style="width:100%" id="iddatatable">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			    <td>No. Cama</td>
 				<td>Estado</td>
@@ -25,7 +25,7 @@ $result=mysqli_query($conexion,$sql);
 				
 			</tr>
 		</thead>
-		<tfoot style="background-color: #ccc;color: white; font-weight: bold;">
+		<tfoot style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<td>No. Cama</td>
 				<td>Estado</td>
@@ -74,12 +74,12 @@ $result=mysqli_query($conexion,$sql);
 					<!-- Esto es el dropdown -->
 					<td style="text-align: center;">
 					<div class="dropdown">
-					<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<button style="background-color: #009fa5;color: white; font-weight: bold;" class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<span class="fa-regular fa-bars"> </span> Opciones
 			</button>
 					<ul class="dropdown-menu">
 					<li style="text-align: center;"><a class="dropdown-item" ><?php if ($ver[3]=='1'){ ?>
-						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
+						<span style="background-color: #009fa5;color: white; font-weight: bold;" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
 							<span class="fa-solid fa-pen-to-square"></span> Asignar Cama </span>
 					
 					
@@ -88,9 +88,9 @@ $result=mysqli_query($conexion,$sql);
 						<span class="fa-solid fa-location-pin-lock"></span> Cambiar estado
 						</span> 
 					<?php }elseif($ver[2]=='2'){ ?>
-						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
+						<span style="background-color: #009fa5;color: white; font-weight: bold;" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
 							<span class="fa-solid fa-pen-to-square"></span> Asignar Cama </span><?php } else {?>					
-							<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
+							<span  style="background-color: #009fa5;color: white; font-weight: bold;" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
 							<span class="fa-solid fa-pen-to-square"></span> Asignar Cama </span><?php } ?>					
 					</a></li>
 					<li><hr class="dropdown-divider"></li>
@@ -135,26 +135,8 @@ $result=mysqli_query($conexion,$sql);
         //para usar los botones   
         responsive: "true",
         dom: 'Bfrtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	        
+	  
     });     
 });
 

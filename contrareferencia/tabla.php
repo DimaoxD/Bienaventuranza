@@ -12,41 +12,7 @@ $result=mysqli_query($conexion,$sql);
 
 
 
-<div>
-<div class="row">
-  <div class="col-xs-12">
-    <label for="dateRangePicker">Fecha de solicitud:</label>
-    <input class="form-control form-control-sm" id="dateRangePicker" name="dateRangePicker" type="text" />
-	</div>
-</div>
-<br>
-<div class="row">
-  <div class="col-xs-12">
-  <label for="userTypeFilter">Estado:</label>
-	<select class="form-select form-select-sm"  id="userTypeFilter">
-	<option value="" selected>Selecciona una opcion</option>
-								<option value="Activo">Activo</option>
-							<option value="Remitido">Remitido</option>
-							<option value="En proceso">En proceso</option>
-							<option value="Cancelado">Cancelado</option>
-							<option value="Cancelado por medico">Cancelado por medico</option>
-							<option value="Familiar no acepta remision">Familiar no acepta remision</option>
-    </select>
-	</div>
-</div>
-<br>
-	<div class="row">
-  <div class="col-xs-12">
-  <label for="Prioridad">Prioridad:</label>
-	<select  class="form-select form-select-sm"  id="Prioridad">
-	<option value="" selected>Selecciona una opcion</option>
-				<option value="Normal">Normal</option>
-				<option value="Urgencia vital">Urgencia vital</option>
-				<option value="Traslado primario">Traslado primario</option>
-				<option value="Prioritaria">Prioritaria</option>
-</select>
-</div>
-</div>
+
 <br>
 <hr>
 <div>

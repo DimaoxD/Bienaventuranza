@@ -14,8 +14,8 @@ $result=mysqli_query($conexion,$sql);
 
 <div>
 <div class="table-responsive">
-	<table class="table table-hover table-condensed table-bordered nowrap" style="width:100%" id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+<table class="table table-hover table-condensed  nowrap" style="width:100%" id="iddatatable">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			    <td>Cedula del paciente</td>
 				<td>Nombre del paciente</td>
@@ -25,7 +25,7 @@ $result=mysqli_query($conexion,$sql);
 				
 			</tr>
 		</thead>
-		<tfoot style="background-color: #ccc;color: white; font-weight: bold;">
+		<tfoot style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<td>Cedula del paciente</td>
 				<td>Nombre del paciente</td>
@@ -48,7 +48,7 @@ $result=mysqli_query($conexion,$sql);
 					echo "Rechazado";
 				} ?></td>
 				<td><div class="dropdown">
-					<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<button class="btn btn-primary btn-sm dropdown-toggle" style="background-color: #009fa5;color: white; font-weight: bold;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<span class="fa-regular fa-bars"> </span> Opciones
 			</button>
 					<ul class="dropdown-menu">
@@ -64,7 +64,7 @@ $result=mysqli_query($conexion,$sql);
 					<span class="fa-solid fa-pen-to-square"></span> Rechazar solicitud
 					</span>
 					<li><hr class="dropdown-divider"></li>
-					<li style="text-align: center;"> <span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modificardatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
+					<li style="text-align: center;"> <span style="background-color: #009fa5;color: white; font-weight: bold;" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modificardatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
 							<span class="fa-solid fa-pen-to-square"></span> Modificar Orden </span></li>
 														<?php	}elseif($ver[1]==1){ ?>
 															<span class="btn btn-success btn-sm">
@@ -75,7 +75,7 @@ $result=mysqli_query($conexion,$sql);
 					<?php }?>					
 					</a></li>
 					<li><hr class="dropdown-divider"></li>
-					<li style="text-align: center;"> <a class="btn btn-primary btn-sm" target="_black" href="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/datatable - copia/oxigeno/upload/'. $ver['2']; ?>" ><span class="fa-solid fa-pen-to-square"></span>Mostrar PDF</a></li>
+					<li style="text-align: center;"> <a class="btn btn-primary btn-sm" style="background-color: #009fa5;color: white; font-weight: bold;" target="_black" href="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/datatable - copia/oxigeno/upload/'. $ver['2']; ?>" ><span class="fa-solid fa-pen-to-square"></span>Mostrar PDF</a></li>
 					
 
 				</td>
@@ -108,26 +108,7 @@ $result=mysqli_query($conexion,$sql);
         //para usar los botones   
         responsive: "true",
         dom: 'Bfrtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	            
     });     
 });
 

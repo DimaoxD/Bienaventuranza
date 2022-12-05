@@ -4,7 +4,7 @@ $conn = new mysqli("localhost","root","","prueba_bips");
 $sql = "UPDATE log_dietas SET estado = 1 WHERE estado = 0";	
 $result = mysqli_query($conn, $sql);
 
-$sql = "SELECT cama.N_Cama,pacientes.Cedula,pacientes.Nombres,FCambio,EstadoNotificaciones FROM log_dietas JOIN pacientes ON log_dietas.Pacientes_Cedula = pacientes.Cedula JOIN dietas ON log_dietas.Dietas_IdDietas = dietas.idDietas JOIN cama ON log_dietas.Cama_idCama = cama.idCama";
+$sql = "SELECT cama.N_Cama,pacientes.Cedula,pacientes.Nombres,FCambio,EstadoNotificaciones FROM log_dietas JOIN pacientes ON log_dietas.Pacientes_Cedula = pacientes.Cedula JOIN dietas ON log_dietas.Dietas_IdDietas = dietas.idDietas JOIN cama ON log_dietas.Cama_idCama = cama.idCama WHERE FCambio > CURRENT_DATE";
 $result = mysqli_query($conn, $sql);
 
 $response='';

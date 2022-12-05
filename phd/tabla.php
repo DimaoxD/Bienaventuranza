@@ -38,9 +38,9 @@ $result=mysqli_query($conexion,$sql);
 <br>
 <hr>
 <div>
-<table>
-	<table class="table table-hover table-condensed table-bordered"  id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+<div class="table-responsive">
+<table class="table table-hover table-condensed nowrap" style="width:100%" id="iddatatable">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<th>F. Solicitud</th>
 			<th>Nombre</th>
@@ -51,7 +51,17 @@ $result=mysqli_query($conexion,$sql);
 			<th>Opciones</th>
 			</tr>
 		</thead>
-		
+		<tfoot style="background-color: #009fa5;color: white; font-weight: bold;">
+		<tr>
+		<th>F. Solicitud</th>
+			<th>Nombre</th>
+			<th>Documento</th>
+			<th>Cama</th>
+			<th>Evolucion</th>
+			<th>Estado</th>
+			<th>Opciones</th>
+</tr>
+</tfoot>		
 		<tbody >
 		<tr>
 		<?php 
@@ -214,26 +224,7 @@ function initializeDataTable() {
         //para usar los botones   
         
         dom: 'Bfrtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	            
     
   });
 }

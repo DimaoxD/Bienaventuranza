@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css" href="librerias/fontawesome/css/fontawesome.css">
 <link href="librerias/fontawesome/css/brands.css" rel="stylesheet">
 <link href="librerias/fontawesome/css/solid.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 

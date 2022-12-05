@@ -17,8 +17,8 @@ $result=mysqli_query($conexion,$sql);
 
 <div>
 <div class="table-responsive">
-	<table class="table table-hover table-condensed table-bordered nowrap" style="width:100%" id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+	<table class="table table-hover table-condensed  nowrap" style="width:100%" id="iddatatable">
+	<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<th>F. Presentacion</th>
 			<th>F. Respuesta</th>
@@ -80,7 +80,7 @@ $result=mysqli_query($conexion,$sql);
 				
 					<td style="text-align: center;">  
 						
-							<span class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[12] ?>')">
+							<span class="btn btn-warning btn-sm" data-bs-toggle="modal" style="background-color: #009fa5;color: white; font-weight: bold;" data-bs-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $ver[12] ?>')">
 							<span class="fa-solid fa-pen-to-square"></span> 
 							</span>
 					</td>
@@ -90,7 +90,7 @@ $result=mysqli_query($conexion,$sql);
 											<span class="fa-solid fa-lock"></span>
 
 														<?php	}else{ ?>
-					<a class="btn btn-primary btn-sm" target="_black" href="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/datatable - copia/referencias/procesos/'. $ver['13']; ?>" ><span class="fa-solid fa-pen-to-square"></span></a>
+					<a class="btn btn-primary btn-sm" style="background-color: #009fa5;color: white; font-weight: bold;" target="_black" href="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/datatable - copia/referencias/procesos/'. $ver['13']; ?>" ><span class="fa-solid fa-pen-to-square"></span></a>
 					<?php } ?>
 					</td>
 				</tr>
@@ -125,26 +125,7 @@ $result=mysqli_query($conexion,$sql);
         //para usar los botones   
         
         dom: 'Bfrtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	     
     });     
 });
 

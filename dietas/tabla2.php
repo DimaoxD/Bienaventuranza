@@ -14,8 +14,8 @@ $result=mysqli_query($conexion,$sql);
 
 <div>
 <div class="table-responsive">
-	<table class="table table-hover table-condensed table-bordered nowrap" style="width:100%" id="iddatatable2">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+<table class="table table-hover table-condensed  nowrap" style="width:100%" id="iddatatable2">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 				<td>Fecha</td>
 			    <td>No. Cama</td>
@@ -24,7 +24,7 @@ $result=mysqli_query($conexion,$sql);
 				<td>Sugerencia de dieta</td>		
 			</tr>
 		</thead>
-		<tfoot style="background-color: #ccc;color: white; font-weight: bold;">
+		<tfoot style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<td>Fecha</td>
 			<td>No. Cama</td>
@@ -85,26 +85,7 @@ $result=mysqli_query($conexion,$sql);
         //para usar los botones   
         responsive: "true",
         dom: 'rtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	   	        
     });     
 });
 

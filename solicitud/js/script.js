@@ -1,34 +1,95 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // El elemento que tendrá el autocompletado
-    const $inputNombre = document.querySelector("#Diagnosticos");
+/**
+ * WEBSITE: https://themefisher.com
+ * TWITTER: https://twitter.com/themefisher
+ * FACEBOOK: https://www.facebook.com/themefisher
+ * GITHUB: https://github.com/themefisher/
+ */
 
+(function($) {
+	"use strict";
 
+	
+	animatedProgressBar();
+	windowHieght();
+	previewPannel();
 
-    let ac = new Awesomplete($inputNombre, {
-        list: [], // Por defecto es una lista vacía, hasta que se comienza a escribir
-        minChars: 1, // Cuántos caracteres escribir para autocompletar
-    });
+	function animatedProgressBar () {
+		$(".progress").each(function() {
+			var skillValue = $(this).find(".skill-lavel").attr("data-skill-value");
+			$(this).find(".bar").animate({
+				width: skillValue
+			}, 1500);
 
-    // Esta función filtra los datos y refresca el autocompletado
-    const refrescarLista = () => {
-        let valorDelInput = $inputNombre.value;
-        if (!valorDelInput) return; // Detener si no hay valor
+			$(this).find(".skill-lavel").text(skillValue);
+		});
+	}
 
-        // Buscar nombres de la base de datos con PHP
-        fetch("./componentes/data.php?busqueda=" + valorDelInput)
-            .then(r => r.json())
-            .then(diagnosticos => {
-                // Mapeamos, ya que se requiere label y value
-                ac.list = diagnosticos.map(diagnosticos => ({
-                    label: diagnosticos.Nombre_Diagnosticos, // Lo que aparece al buscar
-                    value: diagnosticos.Cod_Diagnosticos, // El valor que se pone en el input
-                }));
-            });
-    };
+	function windowHieght(){
+		if ( $(window).height() <=768 ) {
+			$(".pt-table").addClass("desktop-768");
+		} else {
+			$(".pt-table").removeClass("desktop-768");
+		}
+	}
 
-    // Agregar un listener para cuando se cambie el contenido; en el mismo se refresca la lista
-    $inputNombre.addEventListener("input", () => {
-        refrescarLista();
-    });
+	/*----------------------------------------
+		Isotope Masonry
+	------------------------------------------*/
+	function isotopeMasonry() {
+		$(".isotope-gutter").isotope({
+			itemSelector: '[class^="col-"]',
+			percentPosition: true
+		});
+		$(".isotope-no-gutter").isotope({
+			itemSelector: '[class^="col-"]',
+			percentPosition: true,
+			masonry: {
+				columnWidth: 1
+			}
+		});
 
-});
+		$(".filter a").on("click", function(){
+			$(".filter a").removeClass("active");
+			$(this).addClass("active");
+			var selector = $(this).attr("data-filter");
+			$(".isotope-gutter").isotope({
+					filter: selector,
+					animationOptions: {
+					duration: 750,
+					easing: "linear",
+					queue: false
+				}
+			});
+			return false;
+		});
+	}
+
+	/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		Preview Pannel
+	-=-=-=-=-=-=-=-=-=--=-=-=-=-=-*/
+	function previewPannel() {
+		$(".switcher-trigger").on("click", function() {
+			$(".preview-wrapper").toggleClass("extend");
+			return false;
+		});
+		if ($(window).width() < 768 ) {            
+			//$(".preview-wrapper").removeClass("extend");
+		}
+		$(".color-options li").on("click", function(){			
+			$("#color-changer").attr({
+				"href":"css/colors/"+$(this).attr("data-color")+".css"
+			});
+			return false;
+		});
+	}
+	
+	$(window).on("load", function() {
+		isotopeMasonry();
+
+		$(".preloader").addClass("active");
+		setTimeout(function () {
+			$(".preloader").addClass("done");
+		}, 1000);
+	});
+
+})(jQuery);

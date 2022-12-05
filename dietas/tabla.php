@@ -68,7 +68,7 @@ $result=mysqli_query($conexion,$sql);
 					if(($ver[5]==1) OR ($ver[5]==2)){?>
 					<span class="btn btn-info btn-sm"><span class="fa-regular fa-hand"></span> Cama Desocupada </span>					
 					<?php }else{ ?>
-						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarnuevosdatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
+						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" style="background-color: #009fa5;color: white; font-weight: bold;" data-bs-target="#agregarnuevosdatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[0] ?>')">
 						<span class="fa-solid fa-pen-to-square"></span> Asignar Dieta </span>
 					<?php }?>
 					</td>
@@ -102,29 +102,7 @@ $result=mysqli_query($conexion,$sql);
         //para usar los botones   
         responsive: "true",
         dom: 'Bfrtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success',
-				exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4 ]
-                },
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	           
     });     
 });
 

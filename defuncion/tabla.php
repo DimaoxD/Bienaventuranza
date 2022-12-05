@@ -14,8 +14,8 @@ $result=mysqli_query($conexion,$sql);
 
 <div>
 <div class="table-responsive">
-	<table class="table table-hover table-condensed table-bordered nowrap" style="width:100%" id="iddatatable">
-		<thead style="background-color: #dc3545;color: white; font-weight: bold;">
+<table class="table table-hover table-condensed  nowrap" style="width:100%" id="iddatatable">
+		<thead style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			    <td>Numero de certificado</td>
 				<td>Cedula del paciente</td>
@@ -26,7 +26,7 @@ $result=mysqli_query($conexion,$sql);
 				
 			</tr>
 		</thead>
-		<tfoot style="background-color: #ccc;color: white; font-weight: bold;">
+		<tfoot style="background-color: #009fa5;color: white; font-weight: bold;">
 			<tr>
 			<td>Numero de certificado</td>
 				<td>Cedula del paciente</td>
@@ -47,7 +47,7 @@ $result=mysqli_query($conexion,$sql);
 				<td><?php echo $ver[4] ?></td>				
 					<!-- Esto es el dropdown -->
 					<td style="text-align: center;">
-						<span class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modificardatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[5] ?>')">
+						<span class="btn btn-primary btn-sm" style="background-color: #009fa5;color: white; font-weight: bold;" data-bs-toggle="modal" data-bs-target="#modificardatosmodal" onclick="agregaFrmActualizar('<?php echo $ver[5] ?>')">
 							<span class="fa-solid fa-pen-to-square"></span>Modificar Datos </span>
 					</td>
 				</tr>
@@ -79,26 +79,7 @@ $result=mysqli_query($conexion,$sql);
         //para usar los botones   
         responsive: "true",
         dom: 'Bfrtilp',       
-        buttons:[ 
-			{
-				extend:    'excelHtml5',
-				text:      '<i class="fas fa-file-excel"></i> ',
-				titleAttr: 'Exportar a Excel',
-				className: 'btn btn-success'
-			},
-			{
-				extend:    'pdfHtml5',
-				text:      '<i class="fas fa-file-pdf"></i> ',
-				titleAttr: 'Exportar a PDF',
-				className: 'btn btn-danger'
-			},
-			{
-				extend:    'print',
-				text:      '<i class="fa fa-print"></i> ',
-				titleAttr: 'Imprimir',
-				className: 'btn btn-info'
-			},
-		]	        
+		buttons: [ 'excel', 'pdf' ]	                
     });     
 });
 
